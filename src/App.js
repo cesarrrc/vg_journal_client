@@ -1,7 +1,13 @@
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
+import Router from "./Router";
 
 function App() {
-  return <div className="App">Welcome to VG Journal</div>;
+  return (
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  );
 }
 
 export default App;
