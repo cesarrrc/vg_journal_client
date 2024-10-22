@@ -1,10 +1,10 @@
 .main_container {
   max-width: 800px;
-  margin: 10px 40px;
+  margin: 10px 0;
   background-color: #d1d1d1;
   color: #101010;
   padding: 10px 30px;
   border-radius: 12px;
   border: 6px solid #68b0ab;
-  width: 100%;
+  width: 75%;
 }

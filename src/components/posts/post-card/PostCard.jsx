@@ -50,9 +50,11 @@ const PostCard = ({ post, full }) => {
                 <br />
               </p>
             ))}
-      <h5>
-        <LinkButton href={"/post/" + post.id} content="Read More" />
-      </h5>
+      {post.description.length > 1000 && (
+        <h5>
+          <LinkButton href={"/post/" + post.id} content="Read More" />
+        </h5>
+      )}
       <h4>{formatDistanceToNow(new Date(post.create_time))} ago</h4>
     </div>
   );

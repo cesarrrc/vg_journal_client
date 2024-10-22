@@ -41,7 +41,7 @@ const Post = () => {
     "loading..."
   ) : (
     <div className={classes.main_container}>
-      <PostCard post={post} full />;
+      <PostCard post={post} full />
     </div>
   );
 };
