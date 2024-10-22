@@ -3,7 +3,6 @@
 } */
 
 .main_container {
-  height: 60px;
   width: 100%;
   background-color: #68b0ab;
   display: flex;
@@ -48,7 +47,7 @@
     margin: 0;
     display: flex;
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 16px;
   }
   .main_container nav {
     flex: 3;
@@ -59,3 +58,5 @@
     font-size: 14px;
   }
 }
+
+
