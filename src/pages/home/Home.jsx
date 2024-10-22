@@ -34,9 +34,11 @@ const Home = () => {
   return (
     <div className={classes.main_container}>
       <h1>Welcome to VG Journal</h1>
-      {posts.length === 0 && <div>Loading...</div>}
-      {posts.length &&
-        posts.map((post) => <PostCard post={post} key={post.id} />)}
+      {posts.length === 0 ? (
+        <div>Loading...</div>
+      ) : (
+        posts.map((post) => <PostCard post={post} key={post.id} />)
+      )}
     </div>
   );
 };

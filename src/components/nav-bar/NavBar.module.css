@@ -23,3 +23,20 @@
   margin-right: 40px;
   gap: 20px;
 }
+
+@media (max-width: 400px) {
+  .main_container h1 {
+    flex: 3;
+    margin: 0;
+    display: flex;
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  .main_container nav {
+    flex: 3;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    gap: 6px;
+  }
+}
