@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PostCard from "../../components/posts/post-card/PostCard";
+import PostCard from "../../components/post-card/PostCard";
 import { setPosts } from "../../store/features/PostSlice";
 
 import classes from "./Home.module.css";
-import { set } from "date-fns";
 
 const Home = () => {
   const dispatch = useDispatch();
   const [landed, setLanded] = useState(false);
   const posts = useSelector((state) => state.posts);
   useEffect(() => {
-    if (!posts.allPosts.length || !landed) {
+    setLanded(true);
+    console.log(posts.allPosts.length);
+    console.log(landed, "landed");
+    if (posts.allPosts.length === 0 || !landed) {
+      console.log("hello from home");
       fetch(process.env.REACT_APP_API_URL + "/posts/get-posts", {
         method: "GET",
         headers: {
@@ -26,13 +29,12 @@ const Home = () => {
         })
         .then((results) => {
           dispatch(setPosts(results.data));
-          setLanded(true);
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
         });
     }
-  }, [dispatch, posts]);
+  }, [dispatch, posts, landed]);
 
   useEffect(() => {
     console.log(posts);

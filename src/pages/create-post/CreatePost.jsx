@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import classes from "./CreatePost.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../../store/features/PostSlice";
+import {
+  updateAllPostsWithSinglePost,
+  updateUserPostsWithSinglePost,
+} from "../../store/features/PostSlice";
 import { getCookies } from "../../utils/cookie";
 
 const Signup = () => {
@@ -24,7 +27,7 @@ const Signup = () => {
       [name]: value,
     });
   };
-  console.log(cookies, "post page");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(process.env.REACT_APP_API_URL + "/posts/create-post", {
@@ -43,7 +46,18 @@ const Signup = () => {
       })
       .then((response) => {
         console.log(response, "ok packet");
-        dispatch(setPosts({ ...response.data, author: user.username }));
+        dispatch(
+          updateAllPostsWithSinglePost({
+            ...response.data,
+            author: user.username,
+          })
+        );
+        dispatch(
+          updateUserPostsWithSinglePost({
+            ...response.data,
+            author: user.username,
+          })
+        );
         nav("/dashboard");
       })
       .catch((error) => {

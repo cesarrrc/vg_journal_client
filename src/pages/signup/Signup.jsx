@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classes from "./Signup.module.css";
+import AuthForm from "../../components/forms/auth-form/AuthForm";
 
 const Signup = () => {
   const [body, setBody] = useState({
@@ -19,49 +20,36 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    fetch("https://vg-journal-server.onrender.com/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response)
+      .then((results) => {
+        console.log(results);
+      });
   };
   return (
     <div className={classes.main_container}>
-      <form className={classes.contact_form} onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            onChange={handleChange}
-            value={body.username}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            // required
-            onChange={handleChange}
-            value={body.email}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            // required
-            onChange={handleChange}
-            value={body.password}
-            required
-          />
-        </div>
-        <button type="submit" className={classes.submit}>
-          Submit
-        </button>
-      </form>
+      <AuthForm
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        classes={classes}
+        submitButtonText={"Register"}
+        inputs={[
+          { name: "username", label: "Username", type: "text", handleChange },
+          { name: "email", label: "Email", type: "email", handleChange },
+          {
+            name: "password",
+            label: "Password",
+            type: "password",
+            handleChange,
+          },
+        ]}
+      />
     </div>
   );
 };

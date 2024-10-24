@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./Dashboard.module.css";
 import { getCookies } from "../../utils/cookie";
 import { setUserPosts } from "../../store/features/PostSlice";
-import PostCard from "../../components/posts/post-card/PostCard";
+import PostCard from "../../components/post-card/PostCard";
 
 const Dashboard = () => {
   const {
@@ -13,26 +13,26 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // fetch(process.env.REACT_APP_API_URL + "/posts/get-user-posts", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer " + getCookies().id_token,
-    //   },
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((results) => {
-    //     dispatch(setUserPosts(results.data));
-    //   })
-    //   .catch((error) => {
-    //     console.error("There was a problem with the fetch operation:", error);
-    //   });
-  }, []);
+    fetch(process.env.REACT_APP_API_URL + "/posts/get-user-posts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookies().id_token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        dispatch(setUserPosts(results.data));
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }, [dispatch]);
 
   if (!user) return <div>Loading...</div>;
 

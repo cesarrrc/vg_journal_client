@@ -1,8 +1,8 @@
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
-import classes from "./PostCard.module.css";
 import { Link } from "react-router-dom";
-import LinkButton from "../../buttons/LinkButton";
+import LinkButton from "../buttons/LinkButton";
+import classes from "./PostCard.module.css";
 
 const PostCard = ({ post, full }) => {
   return (
@@ -26,11 +26,11 @@ const PostCard = ({ post, full }) => {
             .slice(0, 1000)
             .join("", " ")
             .split("/b")
-            .map((paragraph, i, arr) => (
+            .map((paragraph, i) => (
               <p key={i}>
                 <span>
                   {paragraph}
-                  {i !== 0 && arr.length - 1 === i && (
+                  {post.description.length > 999 && (
                     <Link
                       style={{
                         textDecoration: "none",
@@ -46,7 +46,7 @@ const PostCard = ({ post, full }) => {
                 <br />
               </p>
             ))}
-      {post.description && post.description.length > 1000 && (
+      {post.description && post.description.length > 999 && !full && (
         <h5>
           <LinkButton href={"/post/" + post.id} content="Read More" />
         </h5>

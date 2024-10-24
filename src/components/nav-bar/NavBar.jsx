@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import classes from "./NavBar.module.css";
-import LinkButton from "../buttons/LinkButton";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../store/features/UserSlice";
 import { useNavigate } from "react-router-dom";
 import { eatAllCookies } from "../../utils/cookie";
+import { logout } from "../../store/features/UserSlice";
+import LinkButton from "../buttons/LinkButton";
+import classes from "./NavBar.module.css";
 
 const NavBar = () => {
   const user = useSelector((state) => state.user);
@@ -12,7 +12,6 @@ const NavBar = () => {
   const nav = useNavigate();
   const handleLogout = (e) => {
     e.preventDefault();
-    console.log("clickkkk");
     eatAllCookies();
     dispatch(logout());
     nav("/");

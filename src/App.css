@@ -35,6 +35,12 @@ main {
   justify-content: center;
 }
 
+span a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 12px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
