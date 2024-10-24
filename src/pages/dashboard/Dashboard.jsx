@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import classes from "./Dashboard.module.css";
-import { getCookies } from "../../utils/cookie";
 import { setUserPosts } from "../../store/features/PostSlice";
 import PostCard from "../../components/post-card/PostCard";
 import LinkButton from "../../components/buttons/LinkButton";
+import { getCookies } from "../../utils/cookie";
+import { getUserPosts } from "../../utils/api/posts";
+import classes from "./Dashboard.module.css";
 
 const Dashboard = () => {
   const {
@@ -15,28 +16,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/posts/get-user-posts", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + getCookies().id_token,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((results) => {
-        if (results.data) {
-          dispatch(setUserPosts(results.data));
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
+    getUserPosts(getCookies, dispatch, setUserPosts, setLoading);
   }, [dispatch]);
 
   if (!user) return <div>Loading...</div>;
