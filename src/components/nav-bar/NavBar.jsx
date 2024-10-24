@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { eatAllCookies } from "../../utils/cookie";
 import { logout } from "../../store/features/UserSlice";
 import LinkButton from "../buttons/LinkButton";
+import { eatAllCookies } from "../../utils/cookie";
 import classes from "./NavBar.module.css";
 
 const NavBar = () => {

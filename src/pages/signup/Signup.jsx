@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import classes from "./Signup.module.css";
-import AuthForm from "../../components/forms/AuthForm";
 import { useNavigate } from "react-router-dom";
-import { getCookies, newCookie } from "../../utils/cookie";
-import { fetchUserWithClientToken } from "../../utils/api/auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/features/UserSlice";
+import AuthForm from "../../components/forms/AuthForm";
+import { getCookies, newCookie } from "../../utils/cookie";
+import { signup } from "../../utils/api/auth";
+import classes from "./Signup.module.css";
 
 const Signup = () => {
   const nav = useNavigate();
@@ -16,34 +16,13 @@ const Signup = () => {
     password: "",
   });
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    console.log(name, value);
-    setBody({
-      ...body,
-      [name]: value,
-    });
+    handleChange(e, body, setBody);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://vg-journal-server.onrender.com/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((results) => {
-        console.log(results, "results");
-        newCookie("client_token", results.access_token);
-        fetchUserWithClientToken(getCookies(), dispatch, newCookie, setUser);
-        nav("/dashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    signup(body, newCookie, getCookies, dispatch, setUser);
+    nav("/dashboard");
   };
   return (
     <div className={classes.main_container}>

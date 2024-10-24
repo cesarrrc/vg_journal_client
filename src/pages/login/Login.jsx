@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/features/UserSlice";
-import { fetchUserWithClientToken } from "../../utils/api/auth";
+import AuthForm from "../../components/forms/AuthForm";
+import { login } from "../../utils/api/auth";
 import { newCookie, getCookies } from "../../utils/cookie";
 import classes from "./Login.module.css";
-import AuthForm from "../../components/forms/AuthForm";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,27 +28,8 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(body);
-    fetch(process.env.REACT_APP_API_URL + "/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        newCookie("client_token", data.access_token);
-        fetchUserWithClientToken(getCookies(), dispatch, newCookie, setUser);
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
+    login(newCookie, getCookies, dispatch, setUser, body);
+    navigate("/dashboard");
   };
   return (
     <div className={classes.main_container}>

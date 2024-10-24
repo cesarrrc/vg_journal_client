@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import classes from "./CreatePost.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateAllPostsWithSinglePost,
   updateUserPostsWithSinglePost,
 } from "../../store/features/PostSlice";
+import PostForm from "../../components/forms/PostForm";
 import { getCookies } from "../../utils/cookie";
 import { createPost } from "../../utils/api/auth";
 import { change } from "../../utils/handlers";
-import PostForm from "../../components/forms/PostForm";
+import classes from "./CreatePost.module.css";
 
 const CreatePost = () => {
   const nav = useNavigate();
