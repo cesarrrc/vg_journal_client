@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PostCard from "../../components/posts/post-card/PostCard";
 import { setPosts } from "../../store/features/PostSlice";
 
 import classes from "./Home.module.css";
+import { set } from "date-fns";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [landed, setLanded] = useState(false);
   const posts = useSelector((state) => state.posts);
   useEffect(() => {
-    if (!posts.length) {
+    if (!posts.allPosts.length || !landed) {
       fetch(process.env.REACT_APP_API_URL + "/posts/get-posts", {
         method: "GET",
         headers: {
@@ -24,6 +26,7 @@ const Home = () => {
         })
         .then((results) => {
           dispatch(setPosts(results.data));
+          setLanded(true);
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
@@ -31,13 +34,17 @@ const Home = () => {
     }
   }, [dispatch, posts]);
 
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
+
   return (
     <div className={classes.main_container}>
       <h1>Welcome to VG Journal</h1>
-      {posts.length === 0 ? (
+      {posts.allPosts.length === 0 ? (
         <div>Loading...</div>
       ) : (
-        posts.map((post) => <PostCard post={post} key={post.id} />)
+        posts.allPosts.map((post) => <PostCard post={post} key={post.id} />)
       )}
     </div>
   );

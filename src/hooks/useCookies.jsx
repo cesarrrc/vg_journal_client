@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import cookie from "cookie";
 
 const useCookies = () => {
@@ -11,12 +11,10 @@ const useCookies = () => {
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    console.log("setting new cookie");
     setCookies({ ...cookie.parse(document.cookie) });
   };
 
   const deleteCookies = () => {
-    console.log(cookies, "*************cookie");
     Object.keys(cookies).forEach((key) => {
       console.log(key, "*************KEYYYYYYYYYYY ************");
       document.cookie = cookie.serialize(key, "", {
@@ -31,9 +29,7 @@ const useCookies = () => {
     setCookies(cookie.parse(document.cookie));
   }, []);
 
-  useEffect(() => {
-    console.log(cookies, "from useCookie hook");
-  }, [cookies]);
+  useEffect(() => {}, [cookies]);
 
   return { cookies, getCookies, setCookies, newCookie, deleteCookies };
 };

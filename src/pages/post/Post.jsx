@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import PostCard from "../post-card/PostCard";
+import PostCard from "../../components/posts/post-card/PostCard";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../../../store/features/PostSlice";
+import {  updateAllPostsWithSinglePost } from "../../store/features/PostSlice";
 import classes from "./Post.module.css";
 
 const Post = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
-  const post = posts.find((post) => post.id === Number(post_id));
+  console.log(posts, "inside post******");
+  const post = posts.allPosts.find((post) => post.id === Number(post_id));
 
-  console.log(post, "inside post******");
 
   useEffect(() => {
     if (!post) {
@@ -29,7 +29,8 @@ const Post = () => {
           return response.json();
         })
         .then((results) => {
-          dispatch(setPosts(results.data));
+          console.log(results)
+          dispatch(updateAllPostsWithSinglePost(results.data));
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);

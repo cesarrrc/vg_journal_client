@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import classes from "./NavBar.module.css";
 import LinkButton from "../buttons/LinkButton";
 import { useSelector, useDispatch } from "react-redux";
-// import useCookies from "../../hooks/useCookies";
 import { logout } from "../../store/features/UserSlice";
-import cookie from "cookie";
 import { useNavigate } from "react-router-dom";
+import { eatAllCookies } from "../../utils/cookie";
 
 const NavBar = () => {
   const user = useSelector((state) => state.user);
@@ -14,12 +13,7 @@ const NavBar = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     console.log("clickkkk");
-    Object.keys(cookie.parse(document.cookie)).forEach((key) => {
-      console.log(key, "*************KEYYYYYYYYYYY ************");
-      document.cookie = cookie.serialize(key, null, {
-        maxAge: 0,
-      });
-    });
+    eatAllCookies();
     dispatch(logout());
     nav("/");
   };

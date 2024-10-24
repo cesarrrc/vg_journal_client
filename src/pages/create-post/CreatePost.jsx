@@ -3,12 +3,12 @@ import classes from "./CreatePost.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../store/features/PostSlice";
-import useCookies from "../../hooks/useCookies";
+import { getCookies } from "../../utils/cookie";
 
 const Signup = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const cookies = useCookies().getCookies();
+  const cookies = getCookies();
   const user = useSelector((state) => state.user);
 
   const [body, setBody] = useState({
