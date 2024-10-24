@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import classes from "./Signup.module.css";
-import AuthForm from "../../components/forms/auth-form/AuthForm";
+import AuthForm from "../../components/forms/AuthForm";
+import { useNavigate } from "react-router-dom";
+import { getCookies, newCookie } from "../../utils/cookie";
+import { fetchUserWithClientToken } from "../../utils/api/auth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/features/UserSlice";
 
 const Signup = () => {
+  const nav = useNavigate();
+  const dispatch = useDispatch();
   const [body, setBody] = useState({
     username: "",
     email: "",
@@ -27,9 +34,15 @@ const Signup = () => {
       },
       body: JSON.stringify(body),
     })
-      .then((response) => response)
+      .then((response) => response.json())
       .then((results) => {
-        console.log(results);
+        console.log(results, "results");
+        newCookie("client_token", results.access_token);
+        fetchUserWithClientToken(getCookies(), dispatch, newCookie, setUser);
+        nav("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
   return (
@@ -40,14 +53,9 @@ const Signup = () => {
         classes={classes}
         submitButtonText={"Register"}
         inputs={[
-          { name: "username", label: "Username", type: "text", handleChange },
-          { name: "email", label: "Email", type: "email", handleChange },
-          {
-            name: "password",
-            label: "Password",
-            type: "password",
-            handleChange,
-          },
+          { name: "username", label: "Username", type: "text" },
+          { name: "email", label: "Email", type: "email" },
+          { name: "password", label: "Password", type: "password" },
         ]}
       />
     </div>

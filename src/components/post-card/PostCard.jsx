@@ -14,10 +14,9 @@ const PostCard = ({ post, full }) => {
         <LinkButton href={"/user/" + post.author} content={post.author} />
       </h3>
       {post.description && full
-        ? post.description.split("/b").map((paragraph, i, arr) => (
+        ? post.description.split("\n").map((paragraph, i, arr) => (
             <p key={i}>
               <span>{paragraph}</span>
-              <br />
             </p>
           ))
         : post.description &&
@@ -25,12 +24,12 @@ const PostCard = ({ post, full }) => {
             .split("")
             .slice(0, 1000)
             .join("", " ")
-            .split("/b")
-            .map((paragraph, i) => (
+            .split("\n")
+            .map((paragraph, i, arr) => (
               <p key={i}>
                 <span>
                   {paragraph}
-                  {post.description.length > 999 && (
+                  {post.description.length > 999 && arr.length - 1 === i && (
                     <Link
                       style={{
                         textDecoration: "none",
@@ -43,7 +42,6 @@ const PostCard = ({ post, full }) => {
                     </Link>
                   )}
                 </span>
-                <br />
               </p>
             ))}
       {post.description && post.description.length > 999 && !full && (

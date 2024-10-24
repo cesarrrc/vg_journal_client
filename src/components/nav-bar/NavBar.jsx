@@ -27,6 +27,7 @@ const NavBar = () => {
       <nav className={classes.nav}>
         {user ? (
           <>
+            <LinkButton content="Dashboard" href="/dashboard" />
             <LinkButton content="Create Post" href="/create-post" />
             <LinkButton content="Logout" handleClick={handleLogout} />
           </>
