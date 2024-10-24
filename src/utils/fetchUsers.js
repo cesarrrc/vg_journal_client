@@ -30,6 +30,7 @@ export const fetchUserDetailsWithIdToken = (cookies, dispatch, setUser) => {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log('setttoingggggg')
       dispatch(setUser(data));
     })
     .catch((error) => {

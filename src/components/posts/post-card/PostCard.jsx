@@ -1,14 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import classes from "./PostCard.module.css";
 import { Link } from "react-router-dom";
 import LinkButton from "../../buttons/LinkButton";
 
 const PostCard = ({ post, full }) => {
-  useEffect(() => {
-    console.log(post, "postcard");
-  }, [post]);
-
   return (
     <div className={classes.main_container} key={post.id}>
       <h2>
@@ -50,7 +46,7 @@ const PostCard = ({ post, full }) => {
                 <br />
               </p>
             ))}
-      {post.description.length > 1000 && (
+      {post.description && post.description.length > 1000 && (
         <h5>
           <LinkButton href={"/post/" + post.id} content="Read More" />
         </h5>

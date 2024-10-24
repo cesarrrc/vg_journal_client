@@ -1,10 +1,54 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import classes from "./Dashboard.module.css";
+import { getCookies } from "../../utils/cookie";
+import { setUserPosts } from "../../store/features/PostSlice";
+import PostCard from "../../components/posts/post-card/PostCard";
 
 const Dashboard = () => {
-  const user = useSelector((state) => state.user);
+  const {
+    user,
+    posts: { userPosts },
+  } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-  return <div>Dashboard</div>;
+  useEffect(() => {
+    // fetch(process.env.REACT_APP_API_URL + "/posts/get-user-posts", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: "Bearer " + getCookies().id_token,
+    //   },
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((results) => {
+    //     dispatch(setUserPosts(results.data));
+    //   })
+    //   .catch((error) => {
+    //     console.error("There was a problem with the fetch operation:", error);
+    //   });
+  }, []);
+
+  if (!user) return <div>Loading...</div>;
+
+  return (
+    <div className={classes.main_container}>
+      <div className={classes.profile_container}>
+        <h2>Welcome {user.username}</h2>
+      </div>
+      <h3>Your recent posts:</h3>
+      <div className={classes.post_container}>
+        {userPosts.map((post) => (
+          <PostCard post={post} full key={post.id} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { fetchUserWithClientToken } from "../../utils/fetchUsers";
 import { setUser } from "../../store/features/UserSlice";
-import useCookies from "../../hooks/useCookies";
+import { newCookie, getCookies } from "../../utils/cookie";
 
 import classes from "./Login.module.css";
 
@@ -12,7 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { newCookie, getCookies } = useCookies();
   const [body, setBody] = useState({
     username: "",
     password: "",

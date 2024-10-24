@@ -5,7 +5,7 @@ import Home from "./pages/home/Home";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
-import Post from "./components/posts/post/Post";
+import Post from "./pages/post/Post";
 import CreatePost from "./pages/create-post/CreatePost";
 
 const Router = () => {
