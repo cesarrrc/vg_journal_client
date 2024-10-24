@@ -5,7 +5,7 @@ import { setUser } from "./store/features/UserSlice";
 import {
   fetchUserDetailsWithIdToken,
   fetchUserWithClientToken,
-} from "./utils/fetchUsers";
+} from "./utils/api/auth";
 import { newCookie } from "./utils/cookie";
 
 import NavBar from "./components/nav-bar/NavBar";
@@ -20,13 +20,10 @@ function App() {
 
   useEffect(() => {
     const cookies = cookie.parse(document.cookie);
-    console.log("effect");
     if (cookies.client_token && !cookies.id_token) {
-      console.log("1111111111111111111");
       return fetchUserWithClientToken(cookies, dispatch, newCookie, setUser);
     }
     if (cookies.id_token && !user) {
-      console.log("2222222222222222222222222");
       console.log(user);
       return fetchUserDetailsWithIdToken(cookies, dispatch, setUser);
     }

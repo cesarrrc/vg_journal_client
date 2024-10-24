@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import PostCard from "../../components/posts/post-card/PostCard";
+import PostCard from "../../components/post-card/PostCard";
 import { useDispatch, useSelector } from "react-redux";
-import {  updateAllPostsWithSinglePost } from "../../store/features/PostSlice";
+import { updateAllPostsWithSinglePost } from "../../store/features/PostSlice";
 import classes from "./Post.module.css";
 
 const Post = () => {
@@ -11,7 +11,6 @@ const Post = () => {
   const posts = useSelector((state) => state.posts);
   console.log(posts, "inside post******");
   const post = posts.allPosts.find((post) => post.id === Number(post_id));
-
 
   useEffect(() => {
     if (!post) {
@@ -29,7 +28,7 @@ const Post = () => {
           return response.json();
         })
         .then((results) => {
-          console.log(results)
+          console.log(results);
           dispatch(updateAllPostsWithSinglePost(results.data));
         })
         .catch((error) => {

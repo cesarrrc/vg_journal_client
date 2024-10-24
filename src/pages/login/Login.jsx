@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
-import { fetchUserWithClientToken } from "../../utils/fetchUsers";
 import { setUser } from "../../store/features/UserSlice";
+import { fetchUserWithClientToken } from "../../utils/api/auth";
 import { newCookie, getCookies } from "../../utils/cookie";
-
 import classes from "./Login.module.css";
+import AuthForm from "../../components/forms/AuthForm";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -53,34 +52,16 @@ const Login = () => {
   };
   return (
     <div className={classes.main_container}>
-      <form className={classes.contact_form} onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            onChange={handleChange}
-            value={body.username}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            // required
-            onChange={handleChange}
-            value={body.password}
-            required
-          />
-        </div>
-        <button type="submit" className={classes.submit}>
-          Submit
-        </button>
-      </form>
+      <AuthForm
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        classes={classes}
+        submitButtonText={"Login"}
+        inputs={[
+          { name: "username", label: "Username", type: "text" },
+          { name: "password", label: "Password", type: "password" },
+        ]}
+      />
     </div>
   );
 };

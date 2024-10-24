@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import classes from "./Signup.module.css";
+import AuthForm from "../../components/forms/AuthForm";
+import { useNavigate } from "react-router-dom";
+import { getCookies, newCookie } from "../../utils/cookie";
+import { fetchUserWithClientToken } from "../../utils/api/auth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/features/UserSlice";
 
 const Signup = () => {
+  const nav = useNavigate();
+  const dispatch = useDispatch();
   const [body, setBody] = useState({
     username: "",
     email: "",
@@ -19,49 +27,37 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    fetch("https://vg-journal-server.onrender.com/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((results) => {
+        console.log(results, "results");
+        newCookie("client_token", results.access_token);
+        fetchUserWithClientToken(getCookies(), dispatch, newCookie, setUser);
+        nav("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className={classes.main_container}>
-      <form className={classes.contact_form} onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            onChange={handleChange}
-            value={body.username}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            // required
-            onChange={handleChange}
-            value={body.email}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            // required
-            onChange={handleChange}
-            value={body.password}
-            required
-          />
-        </div>
-        <button type="submit" className={classes.submit}>
-          Submit
-        </button>
-      </form>
+      <AuthForm
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        classes={classes}
+        submitButtonText={"Register"}
+        inputs={[
+          { name: "username", label: "Username", type: "text" },
+          { name: "email", label: "Email", type: "email" },
+          { name: "password", label: "Password", type: "password" },
+        ]}
+      />
     </div>
   );
 };
