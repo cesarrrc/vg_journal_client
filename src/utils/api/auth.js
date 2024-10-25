@@ -1,33 +1,3 @@
-export const createPost = (cookies, body, dispatch, user, callbacks) => {
-  fetch(process.env.REACT_APP_API_URL + "/posts/create-post", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + cookies.id_token,
-    },
-    body: JSON.stringify(body),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((response) => {
-      callbacks.forEach((callback) => {
-        dispatch(
-          callback({
-            ...response.data,
-            author: user.username,
-          })
-        );
-      });
-    })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
-};
-
 export const login = (newCookie, getCookies, dispatch, setUser, body) => {
   fetch(process.env.REACT_APP_API_URL + "/auth/login", {
     method: "POST",

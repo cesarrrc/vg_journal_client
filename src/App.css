@@ -1,5 +1,13 @@
+html {
+  /* this makes sure the padding and the border is included in the box sizing */
+  overflow-x: hidden;
+}
+
+
+
 .App {
   text-align: center;
+  overflow-x: hidden;
 }
 
 .App-logo {
@@ -33,6 +41,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* overflow: hidden; */
+  /* overflow-x: hidden */
 }
 
 span a {
