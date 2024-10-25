@@ -1,0 +1,16 @@
+.drawer_container {
+  width: 160px !important;
+  background-color: #68b0ab !important;
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+.content_container {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  /* margin-left: 20px; */
+  /* justify-content: center; */
+  align-items: center;
+}

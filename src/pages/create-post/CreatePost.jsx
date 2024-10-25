@@ -7,7 +7,7 @@ import {
 } from "../../store/features/PostSlice";
 import PostForm from "../../components/forms/PostForm";
 import { getCookies } from "../../utils/cookie";
-import { createPost } from "../../utils/api/auth";
+import { createPost } from "../../utils/api/posts";
 import { change } from "../../utils/handlers";
 import classes from "./CreatePost.module.css";
 

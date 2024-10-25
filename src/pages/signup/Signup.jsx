@@ -6,6 +6,7 @@ import AuthForm from "../../components/forms/AuthForm";
 import { getCookies, newCookie } from "../../utils/cookie";
 import { signup } from "../../utils/api/auth";
 import classes from "./Signup.module.css";
+import { change } from "../../utils/handlers";
 
 const Signup = () => {
   const nav = useNavigate();
@@ -16,7 +17,7 @@ const Signup = () => {
     password: "",
   });
   const handleChange = (e) => {
-    handleChange(e, body, setBody);
+    change(e, body, setBody);
   };
 
   const handleSubmit = (e) => {
@@ -24,6 +25,7 @@ const Signup = () => {
     signup(body, newCookie, getCookies, dispatch, setUser);
     nav("/dashboard");
   };
+
   return (
     <div className={classes.main_container}>
       <AuthForm

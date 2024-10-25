@@ -6,6 +6,7 @@ import AuthForm from "../../components/forms/AuthForm";
 import { login } from "../../utils/api/auth";
 import { newCookie, getCookies } from "../../utils/cookie";
 import classes from "./Login.module.css";
+import { change } from "../../utils/handlers";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,13 +17,7 @@ const Login = () => {
     password: "",
   });
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    console.log(name, value);
-    setBody({
-      ...body,
-      [name]: value,
-    });
+    change(e, body, setBody);
   };
 
   const handleSubmit = (e) => {
