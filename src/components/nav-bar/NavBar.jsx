@@ -26,6 +26,7 @@ const NavBar = () => {
     e.preventDefault();
     eatAllCookies();
     dispatch(logout());
+    toggleDrawer(false);
     nav("/");
   };
   console.log(win.width <= 800);
@@ -69,14 +70,30 @@ const NavBar = () => {
             >
               {user ? (
                 <>
-                  <LinkButton content="Dashboard" href="/dashboard" />
-                  <LinkButton content="Create Post" href="/create-post" />
+                  <LinkButton
+                    content="Dashboard"
+                    href="/dashboard"
+                    handleClick={toggleDrawer}
+                  />
+                  <LinkButton
+                    content="Create Post"
+                    href="/create-post"
+                    handleClick={toggleDrawer}
+                  />
                   <LinkButton content="Logout" handleClick={handleLogout} />
                 </>
               ) : (
                 <>
-                  <LinkButton href="/login" content="Login" />
-                  <LinkButton href="/signup" content="Signup" />
+                  <LinkButton
+                    href="/login"
+                    content="Login"
+                    handleClick={toggleDrawer}
+                  />
+                  <LinkButton
+                    href="/signup"
+                    content="Signup"
+                    handleClick={toggleDrawer}
+                  />
                 </>
               )}
             </DrawerComponent>
