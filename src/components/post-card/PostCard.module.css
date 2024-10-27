@@ -8,3 +8,29 @@
   border: 6px solid #68b0ab;
   width: 75%;
 }
+
+.icons_container {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.icon_container {
+  height: 24px;
+  display: flex;
+}
+
+.icon_wrap {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+}
+
+.total_likes {
+  margin-left: 6px;
+}
