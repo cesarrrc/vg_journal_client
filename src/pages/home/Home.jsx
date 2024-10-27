@@ -4,6 +4,7 @@ import { setPosts } from "../../store/features/PostSlice";
 import PostCard from "../../components/post-card/PostCard";
 import { getAllPosts } from "../../utils/api/posts";
 import classes from "./Home.module.css";
+// import Quill from "../../components/quill/Quill";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Home = () => {
   return (
     <div className={classes.main_container}>
       <h1>Welcome to VG Journal</h1>
+      {/* <Quill /> */}
       {posts.allPosts.length === 0 ? (
         <div>Loading...</div>
       ) : (

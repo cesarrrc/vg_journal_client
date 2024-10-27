@@ -33,6 +33,30 @@ export const postSlice = createSlice({
     updateUserPostsWithSinglePost: (state, action) => {
       state.userPosts.push(action.payload);
     },
+    updatePostWithLike: (state, action) => {
+      const { user_id, post_id } = action.payload;
+      const itemIndex = state.allPosts.findIndex(
+        (post) => Number(post.id) === Number(post_id)
+      );
+      console.log(itemIndex);
+      if (itemIndex !== -1) {
+        state.allPosts[itemIndex].all_likes.push(user_id);
+        state.allPosts[itemIndex].total_likes++;
+      }
+    },
+    updatePostWithoutLike: (state, action) => {
+      const { user_id, post_id } = action.payload;
+      const itemIndex = state.allPosts.findIndex(
+        (post) => Number(post.id) === Number(post_id)
+      );
+      console.log(itemIndex);
+      if (itemIndex !== -1) {
+        state.allPosts[itemIndex].all_likes = state.allPosts[
+          itemIndex
+        ].all_likes.filter((id) => Number(id) !== Number(user_id));
+        state.allPosts[itemIndex].total_likes--;
+      }
+    },
   },
 });
 
@@ -42,6 +66,8 @@ export const {
   setUserPosts,
   updateAllPostsWithSinglePost,
   updateUserPostsWithSinglePost,
+  updatePostWithLike,
+  updatePostWithoutLike,
 } = postSlice.actions;
 
 export default postSlice.reducer;
