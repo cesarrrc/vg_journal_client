@@ -25,8 +25,10 @@ const PostCard = ({ post, full }) => {
     if (!user) return;
     if (!post) return;
     console.log(post);
+    console.log(post.all_likes);
+
     const found_user = post.all_likes.find((id) => {
-      console.log(post.id, id, user.id);
+      // console.log(post.id, id, user.id);
       return Number(id) === Number(user.id);
     });
     if (found_user) {
