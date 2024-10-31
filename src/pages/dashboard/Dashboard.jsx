@@ -8,16 +8,15 @@ import { getUserPosts } from "../../utils/api/posts";
 import classes from "./Dashboard.module.css";
 
 const Dashboard = () => {
-  const {
-    user,
-    posts: { userPosts },
-  } = useSelector((state) => state);
+  const user = useSelector((state) => state.user);
+  const { userPosts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("set user possts");
     getUserPosts(getCookies, dispatch, setUserPosts, setLoading);
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   if (!user) return <div>Loading...</div>;
 
@@ -42,7 +41,7 @@ const Dashboard = () => {
             />
           </div>
         ) : (
-          userPosts.map((post) => <PostCard post={post} full key={post.id} />)
+          userPosts.map((post) => <PostCard post={post} key={post.id} />)
         )}
       </div>
     </div>

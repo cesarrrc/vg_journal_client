@@ -15,6 +15,11 @@
   margin-right: 20px;
 }
 
+.left_icons_container {
+  display: flex;
+  gap: 20px;
+}
+
 .icon_container {
   height: 24px;
   display: flex;
@@ -31,6 +36,24 @@
   width: 24px;
 }
 
-.total_likes {
+.counter {
   margin-left: 6px;
+}
+
+.delete_button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment_container h5 {
+  margin-bottom: 0;
+}
+
+.comment_container p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.comment_container span {
+  font-size: 10px;
 }

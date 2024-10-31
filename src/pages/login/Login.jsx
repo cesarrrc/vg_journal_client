@@ -20,10 +20,10 @@ const Login = () => {
     change(e, body, setBody);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(body);
-    login(newCookie, getCookies, dispatch, setUser, body);
+    await login(newCookie, getCookies, dispatch, setUser, body);
     navigate("/dashboard");
   };
   return (

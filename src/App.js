@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "./store/features/UserSlice";
 import {
@@ -13,6 +13,7 @@ import Router from "./Router";
 import cookie from "cookie";
 
 import "./App.css";
+import router from "./Router";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -29,14 +30,7 @@ function App() {
     }
   }, [user, dispatch]);
 
-  return (
-    <BrowserRouter>
-      <NavBar />
-      <main>
-        <Router />
-      </main>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -1,5 +1,5 @@
-export const login = (newCookie, getCookies, dispatch, setUser, body) => {
-  fetch(process.env.REACT_APP_API_URL + "/auth/login", {
+export const login = async (newCookie, getCookies, dispatch, setUser, body) => {
+  await fetch(process.env.REACT_APP_API_URL + "/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -12,9 +12,9 @@ export const login = (newCookie, getCookies, dispatch, setUser, body) => {
       }
       return response.json();
     })
-    .then((data) => {
+    .then(async (data) => {
       newCookie("client_token", data.access_token);
-      fetchUserWithClientToken(getCookies(), dispatch, newCookie, setUser);
+      await fetchUserWithClientToken(getCookies(), dispatch, newCookie, setUser);
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
@@ -39,13 +39,13 @@ export const signup = (body, newCookie, getCookies, dispatch, setUser) => {
     });
 };
 
-export const fetchUserWithClientToken = (
+export const fetchUserWithClientToken = async (
   cookies,
   dispatch,
   newCookie,
   setUser
 ) => {
-  fetch(process.env.REACT_APP_API_URL + "/users/get-profile", {
+  await fetch(process.env.REACT_APP_API_URL + "/users/get-profile", {
     headers: {
       "Content-Type": "application/json", // Adjust content type as needed
       Authorization: "Bearer " + cookies.client_token,
