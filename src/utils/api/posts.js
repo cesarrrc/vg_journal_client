@@ -1,5 +1,7 @@
+import { getCookies } from "../cookie";
+
 export const getAllPosts = (dispatch, setPosts) => {
-  fetch(process.env.REACT_APP_API_URL + "/posts/get-posts", {
+  fetch(process.env.REACT_APP_API_URL + "/posts/get-all-posts/1", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -20,6 +22,28 @@ export const getAllPosts = (dispatch, setPosts) => {
     });
 };
 
+export const getNext10Posts = async (page) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_API_URL + "/posts/get-all-posts/" + page,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok", response);
+    }
+    const data = await response.json();
+    console.log(data, "this is the 10 more posts ************");
+    return data;
+  } catch (error) {
+    console.error("There was a problem with the fetch operation:", error);
+  }
+};
+
 export const getSinglePost = (
   post_id,
   dispatch,
@@ -38,8 +62,9 @@ export const getSinglePost = (
       return response.json();
     })
     .then((results) => {
-      console.log(results);
+      console.log(results, "action single post");
       dispatch(updateAllPostsWithSinglePost(results.data));
+      return results;
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
@@ -104,4 +129,39 @@ export const createPost = (cookies, body, dispatch, user, callbacks) => {
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
     });
+};
+export const editPost = async (post_id, body) => {
+  const cookies = getCookies();
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_API_URL + "/posts/edit-post/" + post_id,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.id_token,
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok", response);
+    }
+    const results = await response.json();
+    console.log(results);
+    return results;
+  } catch (error) {
+    console.log(error);
+  }
+
+  // .then((response) => {
+  //   return response.json();
+  // })
+  // .then((response) => {
+
+  //   });
+  // })
+  // .catch((error) => {
+  //   console.error("There was a problem with the fetch operation:", error);
+  // });
 };

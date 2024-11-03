@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../../store/features/PostSlice";
+import { add10Posts, setPosts } from "../../store/features/PostSlice";
 import PostCard from "../../components/post-card/PostCard";
-import { getAllPosts } from "../../utils/api/posts";
+import { getAllPosts, getNext10Posts } from "../../utils/api/posts";
 import classes from "./Home.module.css";
 import { useOutletContext } from "react-router-dom";
 // import Quill from "../../components/quill/Quill";
@@ -12,14 +12,28 @@ const Home = () => {
   // const [landed, setLanded] = useState(false);
   const posts = useSelector((state) => state.posts);
   const [landed, setLanded] = useOutletContext();
+  const [nextPage, setNextPage] = useState(1);
+  const [noMorePosts, setNoMorePosts] = useState(false);
+  console.log(posts);
   useEffect(() => {
     console.log("effect ran 1", landed);
     if (!landed) {
       console.log("effect ran 2");
       getAllPosts(dispatch, setPosts);
       setLanded(true);
+      setNextPage(nextPage + 1);
     }
   }, [dispatch, posts, landed, setLanded]);
+
+  const handleMorePosts = async () => {
+    const results = await getNext10Posts(nextPage);
+    console.log(results, "these be the results yo");
+    if (results.results < 10) {
+      setNoMorePosts(true);
+    }
+    dispatch(add10Posts(results.data));
+    setNextPage(nextPage + 1);
+  };
 
   return (
     <div className={classes.main_container}>
@@ -29,6 +43,11 @@ const Home = () => {
         <div>Loading...</div>
       ) : (
         posts.allPosts.map((post) => <PostCard post={post} key={post.id} />)
+      )}
+      {posts.allPosts && !noMorePosts && (
+        <button style={{ margin: 20 }} onClick={handleMorePosts}>
+          Get More Posts
+        </button>
       )}
     </div>
   );

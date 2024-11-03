@@ -16,6 +16,10 @@ export const postSlice = createSlice({
       }
       state.allPosts = action.payload;
     },
+    add10Posts: (state, action) => {
+      console.log(action.payload, "this is the payload");
+      state.allPosts.push(...action.payload);
+    },
     updateAllPostsWithSinglePost: (state, action) => {
       state.allPosts.push(action.payload);
       state.allPosts.sort(
@@ -32,6 +36,9 @@ export const postSlice = createSlice({
     },
     updateUserPostsWithSinglePost: (state, action) => {
       state.userPosts.push(action.payload);
+      state.userPosts.sort(
+        (a, b) => new Date(b.create_time) - new Date(a.create_time)
+      );
     },
     updatePostWithLike: (state, action) => {
       const { user_id, post_id } = action.payload;
@@ -68,6 +75,7 @@ export const {
   updateUserPostsWithSinglePost,
   updatePostWithLike,
   updatePostWithoutLike,
+  add10Posts,
 } = postSlice.actions;
 
 export default postSlice.reducer;

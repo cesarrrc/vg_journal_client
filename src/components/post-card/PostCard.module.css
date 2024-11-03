@@ -12,7 +12,7 @@
 .icons_container {
   display: flex;
   justify-content: space-between;
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 
 .left_icons_container {
@@ -23,6 +23,8 @@
 .icon_container {
   height: 24px;
   display: flex;
+  position: relative;
+  /* cursor: pointer; */
 }
 
 .icon_wrap {
@@ -56,4 +58,42 @@
 
 .comment_container span {
   font-size: 10px;
+}
+
+.more_button {
+  cursor: pointer;
+}
+
+.more_container {
+  position: absolute;
+  bottom: -2px;
+  right: 24px;
+  list-style-type: none;
+  background-color: white;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  border: #101010 2px solid;
+  /* gap: 4px; */
+}
+
+.more_container li {
+  padding: 8px 16px;
+  cursor: pointer;
+  text-align: center;
+}
+.more_container li:hover {
+  cursor: pointer;
+  background-color: #c0c0c0;
+}
+
+.more_divider {
+  border-bottom: #101010 2px solid;
+  /* width: 80%; */
+  width: 100%;
+  margin: auto;
+  padding: 0;
 }

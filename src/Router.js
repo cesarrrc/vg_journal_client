@@ -16,6 +16,7 @@ import CreatePost from "./pages/create-post/CreatePost";
 import ProtectedRoute from "./components/navigation/ProtectedRoute";
 import UserReroute from "./components/navigation/UserReroute";
 import RootLayout from "./layouts/RootLayout";
+import EditPost from "./pages/edit-post/EditPost";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +33,10 @@ const router = createBrowserRouter(
       <Route
         path="/create-post"
         element={<ProtectedRoute component={CreatePost} />}
+      />
+      <Route
+        path="/edit-post/:post_id"
+        element={<ProtectedRoute component={EditPost} />}
       />
     </Route>
   )

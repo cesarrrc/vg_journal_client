@@ -12,7 +12,8 @@ import AddComment from "../forms/add-comment/AddComment";
 
 import { FaCommentAlt } from "react-icons/fa";
 import { IoBookmark } from "react-icons/io5";
-// import { IoBookmarkOutline } from "react-icons/io5";
+import { IoBookmarkOutline } from "react-icons/io5";
+import { FaEllipsisV } from "react-icons/fa";
 import classes from "./PostCard.module.css";
 import { addPostLike, removePostLike } from "../../utils/api/likes";
 import {
@@ -27,6 +28,7 @@ const PostCard = ({ post, full = false }) => {
   const [active, setActive] = useState(false);
   const [comments, setComments] = useState(null);
   const [comment, setComment] = useState("");
+  const [more, setMore] = useState(false);
 
   useEffect(() => {
     if (post.all_likes && user) {
@@ -90,6 +92,8 @@ const PostCard = ({ post, full = false }) => {
       )
     );
   };
+
+  const handleEdit = () => {};
 
   return (
     <div className={classes.main_container} key={post.id}>
@@ -159,13 +163,30 @@ const PostCard = ({ post, full = false }) => {
             </div>
           </div>
         </div>
-        <div className={classes.icon_container}>
-          <IoBookmark className={classes.icon} />
-        </div>
+        {user && post && Number(post.user_id) === Number(user.id) ? (
+          <div className={classes.icon_container}>
+            {/* <IoBookmark className={classes.icon} /> */}
+            <FaEllipsisV
+              onClick={() => setMore(!more)}
+              className={`${classes.icon} ${classes.more_button}`}
+            />
+            {more && (
+              <ul className={classes.more_container}>
+                <LinkButton href={"/edit-post/" + post.id}>
+                  <li onClick={handleEdit}>Edit</li>
+                </LinkButton>
+                <span className={classes.more_divider}></span>
+                <li>Delete</li>
+              </ul>
+            )}
+          </div>
+        ) : (
+          <div className={classes.icon_container}>
+            {/* <IoBookmark className={classes.icon} /> */}
+            <IoBookmarkOutline className={classes.icon} />
+          </div>
+        )}
       </div>
-      {/* <div className={classes.icon_container}>
-          <IoBookmarkOutline className={classes.icon} />
-          </div> */}
 
       {comments &&
         full &&
@@ -177,9 +198,6 @@ const PostCard = ({ post, full = false }) => {
             <h5>{comment.username}</h5>
             <p>{comment.comment}</p>
             <div className={classes.delete_button}>
-              {console.log("hello world")}
-              {console.log(comment, "hello")}
-              {console.log(comment.create_time, "hello")}
               <span>
                 {formatDistanceToNow(new Date(comment.create_time))} ago
               </span>
@@ -198,8 +216,8 @@ const PostCard = ({ post, full = false }) => {
             <h5>{comment.username}</h5>
             <p>{comment.comment}</p>
             <div className={classes.delete_button}>
-              {console.log(comment, "hello")}
-              {console.log(comment.create_time, "hello")}
+              {/* {console.log(comment, "hello")}
+              {console.log(comment.create_time, "hello")} */}
               <span>
                 {formatDistanceToNow(new Date(comment.create_time))} ago
               </span>
