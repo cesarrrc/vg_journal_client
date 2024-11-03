@@ -12,6 +12,7 @@ export const getAllPosts = (dispatch, setPosts) => {
       return response.json();
     })
     .then((results) => {
+      console.log("SET POSTS ****&&&&&&&&&&******");
       dispatch(setPosts(results.data));
     })
     .catch((error) => {
@@ -45,7 +46,7 @@ export const getSinglePost = (
     });
 };
 
-export const getUserPosts = (
+export const getUserPosts = async (
   getCookies,
   dispatch,
   setUserPosts,

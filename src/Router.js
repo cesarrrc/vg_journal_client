@@ -1,7 +1,12 @@
-import { Routes, Route } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  ScrollRestoration,
+} from "react-router-dom";
 
 import React from "react";
-
 import Home from "./pages/home/Home";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Login from "./pages/login/Login";
@@ -10,11 +15,13 @@ import Post from "./pages/post/Post";
 import CreatePost from "./pages/create-post/CreatePost";
 import ProtectedRoute from "./components/navigation/ProtectedRoute";
 import UserReroute from "./components/navigation/UserReroute";
+import RootLayout from "./layouts/RootLayout";
 
-const Router = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      {/* <ScrollRestoration /> */}
+      <Route index element={<Home />} />
       <Route
         path="/dashboard"
         element={<ProtectedRoute component={Dashboard} />}
@@ -26,8 +33,8 @@ const Router = () => {
         path="/create-post"
         element={<ProtectedRoute component={CreatePost} />}
       />
-    </Routes>
-  );
-};
+    </Route>
+  )
+);
 
-export default Router;
+export default router;
