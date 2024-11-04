@@ -44,7 +44,7 @@ const Home = () => {
       ) : (
         posts.allPosts.map((post) => <PostCard post={post} key={post.id} />)
       )}
-      {posts.allPosts && !noMorePosts && (
+      {!!posts.allPosts.length && !noMorePosts && (
         <button style={{ margin: 20 }} onClick={handleMorePosts}>
           Get More Posts
         </button>
